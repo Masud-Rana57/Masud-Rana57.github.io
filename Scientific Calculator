@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>scientific calculator</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/segment7" type="text/css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Exo+2|Noticia+Text|Bellefair|PT+Sans">
+</head>
+
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    input{
+        width: 270px;
+        color: #000;
+        background-color: #e3fbe3;
+        padding: 0 10px 0 10px;
+    }
+    #disp{
+        height: 30px;
+        font-size: 20px;
+        font-family: Orbitron;
+        border-bottom: none;
+        border-radius: 5px 5px 0 0;
+        margin: 5px 10px 0 10px;
+    }
+    #disp2{
+        height: 40px;
+        text-align: right;
+        font-size: 30px;
+        font-family: Segment7Standard;
+        border-top: none;
+        border-radius: 0 0 5px 5px;
+        margin: 0 10px 5px 10px;
+    }
+    .calculator{
+        width: 315px;
+        height: 485px;
+        background-color: #000;
+        margin: 5%;
+        padding: 5px;
+        border-radius: 20px;
+    }
+    form{
+        margin-top: 5px;
+    }
+    button{
+        width: 55px;
+        height: 40px;
+        font-size: 20px;
+        cursor: pointer;
+        outline: none;
+        border-radius: 10px;
+        font-family:Bellefair;
+        font-weight:bold;
+        margin: 3px;
+        position: relative;
+        background: #fff;
+        border-bottom: 1px solid #d1b358;
+        text-shadow: 0px -1px #e3fbe3;
+    }
+    button:active{
+        transform: translate(0,3px);
+        -webkit-transform: translate(0,3px);
+        border-bottom: 1px solid;
+    }
+    #time{
+        text-align: center;
+        font-size: 20px;
+        font-family: Segment7Standard;
+        color: #e3fbe3;
+        border-radius: 50px;
+        background:#444;
+        margin:-20px;
+    }
+    .copyright{
+        color: #e3fbe3;
+        font-family: cursive;
+        margin-left:65px;
+    }
+</style>
+
+<body onload="startTime()">
+    <div class="calculator">
+        <input type="text" id="disp" autocomplete="off" placeholder="0" disabled><br>
+        <input type="text" id="disp2" disabled>
+    <table>
+        <tr>
+        <td><button onclick="shift(1)" id="Btn" style="color: red">Shift</button></td>
+        <td colspan="3" id="time"></td>
+        <td><button onclick="on()" style="color: green">ON</button></td>
+        </tr>
+        <tr>
+        <td><button onclick="show('sin(')">sin</button></td>
+        <td><button onclick="show('cos(')">cos</button></td>
+        <td><button onclick="show('tan(')">tan</button></td>
+        <td><button onclick="show('log(')">log</button></td>
+        <td><button onclick="clr()" style="color: red">C</button></td>
+        </tr>
+        <tr>
+        <td><button onclick="oper('°')">°</button></td>
+        <td><button onclick="show('√(')">√</button></td>
+        <td><button onclick="show('³√(')">³√</button></td>
+        <td><button onclick="show('(')">(</button></td>
+        <td><button onclick="oper(')')">)</button></td>
+        </tr>
+        <tr>
+        <td><button onclick="show('e')">e</button></td>
+        <td><button onclick="oper('!')">!</button></td>
+        <td><button onclick="oper('^')">^</button></td>
+        <td><button onclick="show('π')">π</button></td>
+        <td><button onclick="oper('%')">%</button></td>
+        </tr>
+        <tr>
+        <td><button onclick="show('7')">7</button></td>
+        <td><button onclick="show('8')">8</button></td>
+        <td><button onclick="show('9')">9</button></td>
+        <td><button onclick="minus()">±</button></td>
+        <td><button onclick="bksp()" style="color: red">⌫</button></td>
+        </tr>
+        <tr>
+        <td><button onclick="show('4')">4</button></td>
+        <td><button onclick="show('5')">5</button></td>
+        <td><button onclick="show('6')">6</button></td>
+        <td><button onclick="oper('×')">×</button></td>
+        <td><button onclick="oper('÷')">÷</button></td>
+        </tr>
+        <tr>
+        <td><button onclick="show('1')">1</button></td>
+        <td><button onclick="show('2')">2</button></td>
+        <td><button onclick="show('3')">3</button></td>
+        <td><button onclick="oper('+')">+</button></td>
+        <td><button onclick="oper('-')">-</button></td>
+        </tr>
+        <tr>
+        <td><button onclick="show('.')" >.</button></td>
+        <td><button onclick="show('0')">0</button></td>
+        <td><button onclick="show('exp(')">exp</button></td>
+        <td><button onclick="answer()">Ans</button></td>
+        <td><button onclick="solve()">=</button></td>
+        </tr>
+    </table>
+    <span class="copyright">Masud Rana © 15 october 2020</span>
+    </div>
+</body>
+
+<script>
+    var ans = 0;
+    const {sin,tan,cos,asin,acos,atan,sqrt,cbrt,E,PI,log,log10,exp,random} = Math;
+    //for function show
+    function show(x) { 
+        document.getElementById("disp").value += x;
+    }
+    //for function oper
+    function oper(x) {
+        var box = document.getElementById("disp");
+        var n = box.value;
+        var le = n.length-1;
+        var v = n.substring(le,n.length);
+        if(box.value.length>0){
+            if(v=="+" || v=="-" || v=="×" || v=="÷"){
+                var t = box.value;
+                var len = t.length-1;
+                var u = t.substring(0,len);
+                box.value = u;
+                box.value += x;
+            }
+            else{
+                box.value += x;
+            }
+        }
+        if(box.value.length == 0){
+            if(x == "+" || x == "-"){
+               box.value += x;
+            }
+            else if(x == ")" || x == "°" || x == "!" || x == "θ"){
+               box.value ="";
+            }
+        }
+    }
+    //solving problems
+    function solve() {
+        var box = document.getElementById("disp");
+        var box2 = document.getElementById("disp2");
+        if(box.value.length>0) {
+            var a = box.value;
+            a = a.replace("×","*");
+            a = a.replace("÷","/");
+            a = a.replace("^","**");
+            a = a.replace("π","PI");
+            a = a.replace("log₁₀","log10");
+            a = a.replace("ran","random");
+            a = a.replace("sin-¹","asin");
+            a = a.replace("cos-¹","acos");
+            a = a.replace("tan-¹","atan");
+            a = a.replace("³√(","cbrt(");
+            a = a.replace("√(","sqrt(");
+            a = a.replace(/(\d+\.?\d*)\°/g,"deg($1)");
+            a = a.replace(/(\d+\.?\d*)\!/g,"fact($1)");
+            a = a.replace(/(\d+\.?\d*)\θ/g,"thita($1)");
+            try {
+                a = eval(a);
+                box2.value = a;
+                ans = a;
+            }
+            catch(error) {
+                box2.value = "Syntax Error;" + error;
+            } 
+        }
+    }
+    //shift button
+    function shift(ken) {
+        var shift = document.getElementById("Btn");
+        var arr = document.getElementsByTagName("button");
+        if (ken == 1) {
+            shift.setAttribute("onclick","shift(0)");
+            shift.style.color = "green";
+            arr[1].innerHTML = "OFF";
+            arr[1].style.color = "red";
+            arr[1].setAttribute("onclick","off()");
+            arr[2].innerHTML = "sin<sup>-</sup>¹" ;
+            arr[2].setAttribute("onclick","show('sin-¹(')");
+            arr[3].innerHTML = "cos<sup>-</sup>¹" ;
+            arr[3].setAttribute("onclick","show('cos-¹(')");
+            arr[4].innerHTML = "tan<sup>-</sup>¹" ;
+            arr[4].setAttribute("onclick","show('tan-¹(')");
+            arr[5].innerHTML = "log₁₀" ;
+            arr[5].setAttribute("onclick","show('log₁₀(')");
+            arr[6].innerHTML = "AC";
+            arr[6].setAttribute("onclick","cls()");
+            arr[7].innerHTML = "θ" ;
+            arr[7].setAttribute("onclick","oper('θ')");
+            arr[34].innerHTML = "ran" ;
+            arr[34].setAttribute("onclick","show('ran(')");
+        } 
+        else {
+            shift.setAttribute("onclick","shift(1)");
+            shift.style.color = "red";
+            arr[1].innerHTML = "ON";
+            arr[1].style.color = "green";
+            arr[1].setAttribute("onclick","on()");
+            arr[2].innerHTML = "sin";
+            arr[2].setAttribute("onclick","show('sin(')");
+            arr[3].innerHTML = "cos";
+            arr[3].setAttribute("onclick","show('cos(')");
+            arr[4].innerHTML = "tan";
+            arr[4].setAttribute("onclick","show('tan(')");
+            arr[5].innerHTML = "log";
+            arr[5].setAttribute("onclick","show('log(')");
+            arr[6].innerHTML = "C";
+            arr[6].setAttribute("onclick","clr()");
+            arr[7].innerHTML = "°";
+            arr[7].setAttribute("onclick","oper('°')");
+            arr[34].innerHTML = "exp";
+            arr[34].setAttribute("onclick","show('exp(')");
+        }
+    }
+    //for answer
+    function answer() {
+        document.getElementById("disp").value += ans;
+    }
+    //for backspace
+    function bksp() {
+        var box = document.getElementById("disp");
+        var v = box.value.substring(0,box.value.length-1);
+        box.value = v;
+        }
+    //cleaning input/output display
+    function clr() {
+        document.getElementById("disp").value = "";
+    }
+    //cleaning input/output display
+    function cls() {
+        document.getElementById("disp").value = "";
+        document.getElementById("disp2").value = "";
+    }
+    //calculating factoria
+    function fact(x) {
+        var a = 1;
+        while(x!=0) {
+            a*= x;
+            x-=1;
+        }
+        return a;
+    }
+    //converting degree to radians
+    function deg(val) {
+        var a = val;
+        a = (Math.PI * a)/180;
+        return a;
+    }
+    //delta 
+    function thita(val) {
+        var a = val;
+        a = a*(180 / Math.PI);
+        return a;
+    }
+    //for ± button
+    function minus() {
+        var input = document.getElementById("disp2");
+        if(input.value.substring(0, 1) == "-") {
+            input.value = input.value.substring(1, input.value.length);
+        }
+        else {
+            input.value = "-" + input.value;
+        }
+    }
+    
+    function startTime() {
+        var today = new Date();
+        var hours = today.getHours();
+        var minutes = today.getMinutes();
+        var seconds = today.getSeconds();
+        var preoid = "AM";
+        if (hours > 12) {
+            preoid = "PM";
+            hours = hours - 12;
+        }
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+        if (hours < 10) {
+            hours = "0" + hours;
+        }
+        document.getElementById("time").innerHTML = hours + ":" + minutes + ":" + seconds + " " + "<span style=font-family:all;font-size:15px;>" + preoid + "</span>";
+        var t = setTimeout(startTime,500);
+    }
+</script>
+</html>
