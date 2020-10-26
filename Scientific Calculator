@@ -1,3 +1,5 @@
+<!-- Masud Rana -->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,9 +9,84 @@
     <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
     <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/segment7" type="text/css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Exo+2|Noticia+Text|Bellefair|PT+Sans">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </head>
 
-<style>
+<body onload="startTime()">
+    <div class="calculator">
+        <input type="text" id="disp" autocomplete="off" placeholder="0" disabled><br>
+        <input type="text" id="disp2" disabled>
+    <table>
+        <tr>
+        <td><button onclick="shift(1)" id="Btn" style="color: red">Shift</button></td>
+        <td colspan="3" id="time"></td>
+        <td><button onclick="on()" style="color: green">ON</button></td>
+        </tr>
+        <tr>
+        <td><button onclick="show('sin(')">sin</button></td>
+        <td><button onclick="show('cos(')">cos</button></td>
+        <td><button onclick="show('tan(')">tan</button></td>
+        <td><button onclick="show('log(')">log</button></td>
+        <td><button onclick="clr()" style="color: red">C</button></td>
+        </tr>
+        <tr>
+        <td><button onclick="oper('°')">°</button></td>
+        <td><button onclick="show('√(')">√</button></td>
+        <td><button onclick="show('³√(')">³√</button></td>
+        <td><button onclick="show('(')">(</button></td>
+        <td><button onclick="oper(')')">)</button></td>
+        </tr>
+        <tr>
+        <td><button onclick="show('e')">e</button></td>
+        <td><button onclick="oper('!')">!</button></td>
+        <td><button onclick="oper('^')">^</button></td>
+        <td><button onclick="show('π')">π</button></td>
+        <td><button onclick="oper('%')">%</button></td>
+        </tr>
+        <tr>
+        <td><button onclick="show('7')">7</button></td>
+        <td><button onclick="show('8')">8</button></td>
+        <td><button onclick="show('9')">9</button></td>
+        <td><button onclick="minus()">±</button></td>
+        <td><button onclick="bksp()" style="color: red">⌫</button></td>
+        </tr>
+        <tr>
+        <td><button onclick="show('4')">4</button></td>
+        <td><button onclick="show('5')">5</button></td>
+        <td><button onclick="show('6')">6</button></td>
+        <td><button onclick="oper('×')">×</button></td>
+        <td><button onclick="oper('÷')">÷</button></td>
+        </tr>
+        <tr>
+        <td><button onclick="show('1')">1</button></td>
+        <td><button onclick="show('2')">2</button></td>
+        <td><button onclick="show('3')">3</button></td>
+        <td><button onclick="oper('+')">+</button></td>
+        <td><button onclick="oper('-')">-</button></td>
+        </tr>
+        <tr>
+        <td><button onclick="show('.')" >.</button></td>
+        <td><button onclick="show('0')">0</button></td>
+        <td><button onclick="show('exp(')">exp</button></td>
+        <td><button onclick="answer()">Ans</button></td>
+        <td><button onclick="solve()">=</button></td>
+        </tr>
+    </table>
+    <span class="copyright">Masud Rana © 15 october 2020</span>
+    </div>
+    
+    <script>
+      Swal.fire({
+icon: "success",
+title: "Welcome !",
+text: "To my Web! If you like this web please upvote and write comment.",
+footer: "Masud Rana"
+});
+    </script>
+    
+    <style>
+    /* Masud Rana */
+
     *{
         margin: 0;
         padding: 0;
@@ -82,73 +159,11 @@
         font-family: cursive;
         margin-left:65px;
     }
-</style>
+    </style>
 
-<body onload="startTime()">
-    <div class="calculator">
-        <input type="text" id="disp" autocomplete="off" placeholder="0" disabled><br>
-        <input type="text" id="disp2" disabled>
-    <table>
-        <tr>
-        <td><button onclick="shift(1)" id="Btn" style="color: red">Shift</button></td>
-        <td colspan="3" id="time"></td>
-        <td><button onclick="on()" style="color: green">ON</button></td>
-        </tr>
-        <tr>
-        <td><button onclick="show('sin(')">sin</button></td>
-        <td><button onclick="show('cos(')">cos</button></td>
-        <td><button onclick="show('tan(')">tan</button></td>
-        <td><button onclick="show('log(')">log</button></td>
-        <td><button onclick="clr()" style="color: red">C</button></td>
-        </tr>
-        <tr>
-        <td><button onclick="oper('°')">°</button></td>
-        <td><button onclick="show('√(')">√</button></td>
-        <td><button onclick="show('³√(')">³√</button></td>
-        <td><button onclick="show('(')">(</button></td>
-        <td><button onclick="oper(')')">)</button></td>
-        </tr>
-        <tr>
-        <td><button onclick="show('e')">e</button></td>
-        <td><button onclick="oper('!')">!</button></td>
-        <td><button onclick="oper('^')">^</button></td>
-        <td><button onclick="show('π')">π</button></td>
-        <td><button onclick="oper('%')">%</button></td>
-        </tr>
-        <tr>
-        <td><button onclick="show('7')">7</button></td>
-        <td><button onclick="show('8')">8</button></td>
-        <td><button onclick="show('9')">9</button></td>
-        <td><button onclick="minus()">±</button></td>
-        <td><button onclick="bksp()" style="color: red">⌫</button></td>
-        </tr>
-        <tr>
-        <td><button onclick="show('4')">4</button></td>
-        <td><button onclick="show('5')">5</button></td>
-        <td><button onclick="show('6')">6</button></td>
-        <td><button onclick="oper('×')">×</button></td>
-        <td><button onclick="oper('÷')">÷</button></td>
-        </tr>
-        <tr>
-        <td><button onclick="show('1')">1</button></td>
-        <td><button onclick="show('2')">2</button></td>
-        <td><button onclick="show('3')">3</button></td>
-        <td><button onclick="oper('+')">+</button></td>
-        <td><button onclick="oper('-')">-</button></td>
-        </tr>
-        <tr>
-        <td><button onclick="show('.')" >.</button></td>
-        <td><button onclick="show('0')">0</button></td>
-        <td><button onclick="show('exp(')">exp</button></td>
-        <td><button onclick="answer()">Ans</button></td>
-        <td><button onclick="solve()">=</button></td>
-        </tr>
-    </table>
-    <span class="copyright">Masud Rana © 15 october 2020</span>
-    </div>
-</body>
+    <script>
+// Masud Rana
 
-<script>
     var ans = 0;
     const {sin,tan,cos,asin,acos,atan,sqrt,cbrt,E,PI,log,log10,exp,random} = Math;
     //for function show
@@ -230,8 +245,6 @@
             arr[4].setAttribute("onclick","show('tan-¹(')");
             arr[5].innerHTML = "log₁₀" ;
             arr[5].setAttribute("onclick","show('log₁₀(')");
-            arr[6].innerHTML = "AC";
-            arr[6].setAttribute("onclick","cls()");
             arr[7].innerHTML = "θ" ;
             arr[7].setAttribute("onclick","oper('θ')");
             arr[34].innerHTML = "ran" ;
@@ -251,13 +264,21 @@
             arr[4].setAttribute("onclick","show('tan(')");
             arr[5].innerHTML = "log";
             arr[5].setAttribute("onclick","show('log(')");
-            arr[6].innerHTML = "C";
-            arr[6].setAttribute("onclick","clr()");
             arr[7].innerHTML = "°";
             arr[7].setAttribute("onclick","oper('°')");
             arr[34].innerHTML = "exp";
             arr[34].setAttribute("onclick","show('exp(')");
         }
+    }
+    function off(){
+        document.getElementById("disp").style.visibility = "hidden";
+        document.getElementById("disp2").style.visibility = "hidden";
+    }
+    function on(){
+        document.getElementById("disp").style.visibility = "visible";
+        document.getElementById("disp2").style.visibility = "visible";
+        document.getElementById("disp").value = "";
+        document.getElementById("disp2").value = "";
     }
     //for answer
     function answer() {
@@ -272,11 +293,6 @@
     //cleaning input/output display
     function clr() {
         document.getElementById("disp").value = "";
-    }
-    //cleaning input/output display
-    function cls() {
-        document.getElementById("disp").value = "";
-        document.getElementById("disp2").value = "";
     }
     //calculating factoria
     function fact(x) {
@@ -293,7 +309,7 @@
         a = (Math.PI * a)/180;
         return a;
     }
-    //delta 
+    //thita 
     function thita(val) {
         var a = val;
         a = a*(180 / Math.PI);
@@ -329,8 +345,9 @@
         if (hours < 10) {
             hours = "0" + hours;
         }
-        document.getElementById("time").innerHTML = hours + ":" + minutes + ":" + seconds + " " + "<span style=font-family:all;font-size:15px;>" + preoid + "</span>";
+        document.getElementById("time").innerHTML = hours + ":" + minutes + ":" + seconds + " " + "<span style=font-family:Orbitron;font-size:15px;>" + preoid + "</span>";
         var t = setTimeout(startTime,500);
     }
 </script>
+</body>
 </html>
